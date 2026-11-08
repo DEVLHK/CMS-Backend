@@ -5,8 +5,12 @@
 # @Email : kenlin@hisunglobal.com
 # @File : contract_parser.py
 # @Project : CMS-Backend
-"""合同 Word（.doc 固定格式）解析：提取文本（antiword/textutil/libreoffice 三级兜底）
-后按锚点正则回填：合同编号/企业名称/联系人/联系方式/项目类型/合同金额/签约日期/月份/区域。
+"""合同 Word（.doc 固定格式）解析：提取文本 + 按锚点正则回填
+合同编号/企业名称/联系人/联系方式/项目类型/合同金额/签约日期/月份/区域。
+
+提取主方案为纯 Python（olefile 读 WordDocument 流 + UTF-16LE 解码），
+无外部工具依赖；antiword/textutil(macOS)/libreoffice 仅作兜底。
+注意：antiword 0.37 不兼容 WPS Office 生成的 .doc，不要调整为主方案。
 
 样例与锚点约定见 asset/ai-docs/contract-manage-requirement.md 第 8 章。
 """
@@ -15,6 +19,8 @@ import re
 import shutil
 import subprocess
 
+import olefile
+
 from utils.loging_util import logger
 
 REGIONS = ("茂南区", "化州市", "高州市", "电白区", "高新区", "滨海新区")
@@ -22,9 +28,26 @@ REGIONS = ("茂南区", "化州市", "高州市", "电白区", "高新区", "滨
 _PHONE_PATTERN = r"1[3-9]\d{9}"
 _AMOUNT_PATTERN = r"[（(]\s*[¥￥]\s*([\d,]+(?:\.\d{1,2})?)"
 
+# 正文可读字符白名单（提取时白名单之外的字符替换为换行，保留段落边界）
+_READABLE = r"[^\u4e00-\u9fa5A-Za-z0-9，。：:；！？（()）¥\.、《》\-—％%\s»«]"
+
+
+def extract_text_python(doc_path):
+    """纯 Python 提取：olefile 读 WordDocument 流，按 UTF-16LE 解码，
+    正文白名单之外的字符替换为换行（保留段落边界），空行丢弃"""
+    data = olefile.OleFileIO(doc_path).openstream("WordDocument").read()
+    raw = data.decode("utf-16-le", errors="ignore")
+    text = re.sub(_READABLE, "\n", raw)
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    return "\n".join(lines)
+
 
 def extract_text(doc_path):
-    """.doc -> 纯文本；按 antiword -> textutil(macOS) -> libreoffice 顺序探测"""
+    """.doc -> 纯文本；主方案纯 Python（olefile），失败时按 antiword -> textutil(macOS) -> libreoffice 兜底"""
+    try:
+        return extract_text_python(doc_path)
+    except Exception as exc:
+        logger.warning(f"olefile extract failed: {exc}")
     if shutil.which("antiword"):
         result = subprocess.run(["antiword", doc_path], capture_output=True, timeout=60)
         if result.returncode == 0:
@@ -36,7 +59,7 @@ def extract_text(doc_path):
         if result.returncode == 0:
             return result.stdout.decode("utf-8", "ignore")
         logger.warning(f"textutil failed: {result.stderr.decode('utf-8', 'ignore')[:200]}")
-    if shutil.which("libreoffice"):  # Linux 兜底（也支持 .docx）
+    if shutil.which("libreoffice"):  # 兜底（也支持 .docx）
         import tempfile
         with tempfile.TemporaryDirectory() as tmp_dir:
             result = subprocess.run(
@@ -47,7 +70,7 @@ def extract_text(doc_path):
                 with open(os.path.join(tmp_dir, txt_files[0]), encoding="utf-8", errors="ignore") as f:
                     return f.read()
         logger.warning("libreoffice convert failed")
-    raise RuntimeError("无可用的 .doc 文本提取工具（antiword/textutil/libreoffice）")
+    raise RuntimeError("合同文本提取失败（olefile 及 antiword/textutil/libreoffice 均不可用）")
 
 
 def _first(text, pattern, group=1):

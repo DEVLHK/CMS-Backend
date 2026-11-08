@@ -23,6 +23,5 @@ numpy==1.24.4
 requests==2.32.3
 PyYAML==6.0.1
 bcrypt==4.1.3
-varname==0.13.5
-strenum==0.4.15
-lxml==6.0.2   # pms_deploy_robot.py 定时任务脚本解析禅道页面用
+olefile==0.46         # 合同 Word 解析：读 .doc OLE 流（纯 Python，主方案；antiword/textutil/libreoffice 仅兜底）
+# varname/strenum/lxml 已随 oms 遗留模块清理移除（代码中已无引用）

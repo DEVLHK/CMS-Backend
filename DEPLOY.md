@@ -1,6 +1,6 @@
-# Soybean-backend 部署运维手册
+# CMS-Backend 部署运维手册
 
-> 适用环境：Linux 服务器 / 部署用户 `hbs` / 部署目录 `/app/hbs/cms/Soybean-backend` / 监听端口 `8004`
+> 适用环境：Linux 服务器 / 部署用户 `hbs` / 部署目录 `/app/hbs/cms/CMS-Backend` / 监听端口 `8004`
 
 ---
 
@@ -23,7 +23,7 @@
 - Python ≥ 3.9（开发基线 3.10；`/bin/python3` 需满足此版本）
 - 端口 8004 可用且 >1024（非 root 可监听）；前端部署端口 **5000**
 - 服务器可访问：GitHub（拉代码）、cms/禅道数据库、`pms.hisunglobal.com`（定时任务脚本用）
-- **antiword**（合同 Word 解析必需，缺它新增合同上传解析失败）：`sudo apt install antiword` 或 `sudo yum install antiword`
+- 合同 Word 解析为**纯 Python 实现（olefile，随 requirements 安装）**，无需安装 antiword 等系统工具（antiword/textutil/libreoffice 仅作解析兜底，未安装不影响）
 
 前端联调约定（后端侧两处与前端地址相关，前端地址变更需同步）：
 - CORS 白名单：`app/run_cms_app.py` `allow_origins=["http://192.168.200.172:5000"]`
@@ -46,8 +46,8 @@
 sudo mkdir -p /app/hbs/cms
 sudo chown -R hbs:hbs /app/hbs
 cd /app/hbs/cms
-git clone https://github.com/DEVLHK/Soybean-backend.git
-cd Soybean-backend
+git clone https://github.com/DEVLHK/CMS-Backend.git
+cd CMS-Backend
 ```
 
 Git 授权（首次 clone/pull 需要输入）：用户名填 GitHub 账号，密码填 **Personal Access Token**（GitHub → Settings → Developer settings → Personal access tokens 生成，勾选 repo 读权限）。
@@ -62,7 +62,7 @@ git config --global credential.helper store
 ### 3.2 安装依赖（无 venv，装到用户目录）
 
 ```bash
-cd /app/hbs/cms/Soybean-backend
+cd /app/hbs/cms/CMS-Backend
 python3 -m pip install --user -r requirements.txt
 ```
 
@@ -86,13 +86,12 @@ ALTER TABLE task_monitor_daily_stat
 ```bash
 sudo tee /etc/systemd/system/cms.service > /dev/null <<'EOF'
 [Unit]
-Description=Soybean OMS Backend
+Description=Soybean CMS Backend
 After=network.target
 
 [Service]
 User=hbs
-Environment=HOME=/home/hbs
-WorkingDirectory=/app/hbs/cms/Soybean-backend/app
+WorkingDirectory=/app/hbs/cms/CMS-Backend/app
 ExecStart=/bin/python3 -m uvicorn run_cms_app:cms_app --host 0.0.0.0 --port 8004
 Restart=always
 RestartSec=5
@@ -129,7 +128,7 @@ sudo journalctl -u cms --since "5 min ago" | grep -E "scheduler jobs registered|
 ### 4.1 更新发版
 
 ```bash
-cd /app/hbs/cms/Soybean-backend && git reset --hard origin/main && git pull
+cd /app/hbs/cms/CMS-Backend && git reset --hard origin/main && git pull
 python3 -m pip install --user -r requirements.txt   # 依赖有变时
 sudo systemctl restart cms
 ```
@@ -199,8 +198,10 @@ sudo journalctl -u cms -f     # 跟实时日志
 | `git pull` 每次要密码 | 见 3.1 凭据存储；token 过期（401）去 GitHub 重新生成 |
 | vim 存 unit 报 `E212` | 用 `sudo vim` 或 `:w !sudo tee %` |
 | pip 报 `externally-managed-environment` | 追加 `--break-system-packages` |
-| 服务起不来，`journalctl` 报 `ModuleNotFoundError` | 依赖没装到运行用户的 site-packages：用 `hbs` 执行 3.2 |
+| 服务起不来，`journalctl` 报 `ModuleNotFoundError` | 依赖没装到运行解释器的 site-packages：root 装系统级 `/bin/python3 -m pip install -r requirements.txt`（服务未配 `HOME`，`--user` 安装方式不可用） |
 | 端口被占 `Address already in use` | `ss -lntp \| grep 8004` 找到占用进程 |
+| 上传合同报解析错误 | 主方案为纯 Python（`olefile`，随 requirements 安装），无需系统工具。报 `No module named 'olefile'` 时按服务运行身份补装（root：`/bin/python3 -m pip install olefile`）。WPS 生成的 .doc 兼容（antiword 0.37 反而不支持 WPS 文档，勿切换为主方案） |
+| 解析返回 `missing` 字段非空 | 合同 Word 内容与固定格式不符（缺对应锚点字段），前端会留空手填，不阻断；如需精确解析请核对文档格式 |
 | 定时任务没跑 | 确认 `scheduler_job.enabled=1` 且脚本路径存在；看 job_logs 当日目录 |
 | 改了 zt_user/团队表前端没变 | 维度表缓存 TTL 300s，等 5 分钟或重启服务 |
 
@@ -210,5 +211,4 @@ sudo journalctl -u cms -f     # 跟实时日志
 
 - GitHub Token 等同密码：不进代码/聊天记录，泄露即在 GitHub 页面 Revoke
 - `~/.git-credentials` 为明文，依赖服务器登录管控
-- 定时任务脚本 `cbl_task_notification.py` 内 `TEST_BOT_KEY` 为测试机器人，接正式通知前替换为正式机器人 key
 - 禅道库账号仅只读（read_pms），不要提权
