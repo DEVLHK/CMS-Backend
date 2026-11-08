@@ -66,7 +66,7 @@ cms_app.state.project_path=project_path
 # 启用 CORS
 cms_app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://192.168.200.172:4000"],  # 允许所有域名，生产环境应限制为具体域名
+    allow_origins=["http://192.168.200.172:5000"],  # 前端生产地址（端口 5000），生产环境应限制为具体域名
     allow_credentials=True,
     allow_methods=["*"],  # 允许所有 HTTP 方法
     allow_headers=["*"],  # 允许所有请求头

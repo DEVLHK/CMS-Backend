@@ -9,7 +9,8 @@ pydantic==2.8.2
 # Database
 SQLAlchemy==2.0.30
 PyMySQL==1.1.1
-cx_Oracle==8.3.0
+cryptography==42.3.8   # MySQL 9 caching_sha2_password 认证必需（缺它连库报错）
+# cx_Oracle 已随 oms 遗留模块清理移除（utils/oracle_util.py 已无引用）
 
 # Scheduler
 APScheduler==3.11.2

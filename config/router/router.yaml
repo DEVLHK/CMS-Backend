@@ -385,6 +385,25 @@ common:
     function: app.service.common.main.copy_file
     input-model: app.api.model.common.copy_file_model.Input
     output-model: app.api.model.common.copy_file_model.Output
+homeManage:
+  getHomeStats:
+    method: GET
+    function: app.service.home_manage.main.get_home_stats
+    output-model: app.api.model.home_manage.get_home_stats_model.Output
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: homeStats
+    tags:
+    - homeManage/Stats
+  getExpiringContracts:
+    method: GET
+    function: app.service.home_manage.main.get_expiring_contracts
+    input-model: app.api.model.home_manage.get_expiring_contracts_model.Input
+    output-model: app.api.model.home_manage.get_expiring_contracts_model.Output
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: homeExpiringContracts
+    tags:
+    - homeManage/Stats
+
 contractManage:
   uploadContract:
     method: POST

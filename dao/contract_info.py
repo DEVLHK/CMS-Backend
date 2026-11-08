@@ -113,6 +113,45 @@ class ContractInfoDao:
         df = mysql.query(self.conn, sql, (contract_no,))
         return {"code": 0, "data": df}
 
+    def query_home_stats(self):
+        """首页统计聚合（仅生效合同 status=1）：
+        合同数 / 合同额 / 毛利润 / 收款额（联明细过滤生效合同）/ 即将到期数（未过期且 expire_date <= 今天+2个月）"""
+        if self.conn is None:
+            return {"code": -1, "data": None}
+        mysql = mysql_util.MySQL()
+        sql = ("select count(*) as contract_count, "
+               "IFNULL(sum(contract_amount), 0) as total_contract_amount, "
+               "IFNULL(sum(gross_profit), 0) as total_gross_profit, "
+               "(select IFNULL(sum(r.receipt_amount), 0) from contract_receipt_detail r "
+               "  join contract_info c2 on c2.contract_no = r.contract_no and c2.status = 1"
+               ") as total_receipt_amount, "
+               "IFNULL(sum(expire_date >= curdate() and expire_date <= curdate() + interval 2 month), 0) as expiring_count "
+               "from contract_info where status = 1")
+        df = mysql.query(self.conn, sql, ())
+        return {"code": 0, "data": df}
+
+    def query_expiring(self, clauses):
+        """即将到期合同清单（status=1 且未过期、expire_date <= 今天+2个月），clauses 含排序与分页"""
+        if self.conn is None:
+            return {"code": -1, "data": None}
+        mysql = mysql_util.MySQL()
+        sql = (f"select id, contract_no, company_name, expire_date from {self.table} "
+               f"where status = 1 and expire_date >= curdate() "
+               f"and expire_date <= curdate() + interval 2 month {clauses}")
+        df = mysql.query(self.conn, sql, ())
+        return {"code": 0, "data": df}
+
+    def count_expiring(self):
+        """即将到期合同总数（口径与 query_expiring 一致）"""
+        if self.conn is None:
+            return {"code": -1, "data": None}
+        mysql = mysql_util.MySQL()
+        sql = (f"select count(*) as total from {self.table} "
+               f"where status = 1 and expire_date >= curdate() "
+               f"and expire_date <= curdate() + interval 2 month")
+        df = mysql.query(self.conn, sql, ())
+        return {"code": 0, "data": int(df.loc[0, "total"])}
+
     def count(self, fields=None, extra_conditions=None):
         """带 c. 别名，与 query_with_totals 一致（extra_conditions 由调用方携带 c. 前缀）"""
         if self.conn is None:

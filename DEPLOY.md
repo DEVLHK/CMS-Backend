@@ -21,8 +21,13 @@
 ## 2. 环境要求
 
 - Python ≥ 3.9（开发基线 3.10；`/bin/python3` 需满足此版本）
-- 端口 8004 可用且 >1024（非 root 可监听）
+- 端口 8004 可用且 >1024（非 root 可监听）；前端部署端口 **5000**
 - 服务器可访问：GitHub（拉代码）、cms/禅道数据库、`pms.hisunglobal.com`（定时任务脚本用）
+- **antiword**（合同 Word 解析必需，缺它新增合同上传解析失败）：`sudo apt install antiword` 或 `sudo yum install antiword`
+
+前端联调约定（后端侧两处与前端地址相关，前端地址变更需同步）：
+- CORS 白名单：`app/run_cms_app.py` `allow_origins=["http://192.168.200.172:5000"]`
+- 图片上传回显 URL：`app/service/common/main.py` `upload_images()` 硬编码 `http://192.168.200.172:5000/uploads/...`
 
 版本确认：
 

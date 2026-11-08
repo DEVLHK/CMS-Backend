@@ -55,7 +55,7 @@ def upload_images(files: List[UploadFile] = File(...)):
                 dest_file_path = os.path.join(str(dest_file_dir_path), file.filename)
                 with open(dest_file_path, "wb") as f:
                     shutil.copyfileobj(file.file, f)
-                url = f"http://192.168.200.172:4000/uploads/{current_date}/{temp_file_dir}/{file.filename}"
+                url = f"http://192.168.200.172:5000/uploads/{current_date}/{temp_file_dir}/{file.filename}"
                 id = current_date + temp_file_dir
                 resource = upload_file_model.ResourceForUploadImages(
                     fileName=file.filename,
