@@ -1,0 +1,7 @@
+# temp 下的三个运行时目录保留目录占位（.gitkeep 入库），其中内容全部不入库
+temp/contracts/*
+!temp/contracts/.gitkeep
+temp/job_logs/*
+!temp/job_logs/.gitkeep
+temp/log/*
+!temp/log/.gitkeep

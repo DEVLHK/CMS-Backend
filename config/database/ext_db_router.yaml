@@ -1,0 +1,5 @@
+zentao:
+  db_type: mysql
+  db_config: zentao.cnf
+
+

@@ -1,0 +1,11 @@
+[client]
+host=192.168.201.89
+user=cms
+password=cms@dev
+port=3306
+client_dir='/opt/oracle/instantclient_19_20'
+default-character-set = utf8mb4
+
+[mysql]
+database=cms
+default-character-set = utf8mb4

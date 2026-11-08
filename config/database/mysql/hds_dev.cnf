@@ -1,0 +1,11 @@
+[client]
+host=192.168.200.103
+user=hds
+password=orb@hds2024
+port=3306
+client_dir='/opt/oracle/instantclient_19_20'
+default-character-set = utf8mb4
+
+[mysql]
+database=hds
+default-character-set = utf8mb4

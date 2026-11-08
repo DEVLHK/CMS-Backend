@@ -1,0 +1,9 @@
+fastapi-config:
+  host: 0.0.0.0
+  port: 8004
+  uploadFileDir: uploadFile
+  tempFileDir: tempFile
+
+
+
+

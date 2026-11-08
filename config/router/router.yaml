@@ -1,0 +1,563 @@
+auth:
+  login:
+    method: POST
+    function: app.service.auth.main.user_login
+    input-model: app.api.model.auth.login_model.Input
+    output-model: app.api.model.auth.login_model.Output
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: userLogin
+    tags:
+    - auth
+  getUserInfo:
+    method: GET
+    function: app.service.auth.main.get_user_info
+    output-model: app.api.model.auth.get_user_info_model.Output
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: getUserInfo
+    tags:
+    - auth
+  refreshToken:
+    method: POST
+    function: app.service.auth.main.refresh_token
+    input-model: app.api.model.auth.refresh_token_model.Input
+    output-model: app.api.model.auth.refresh_token_model.Output
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: refreshToken
+    tags:
+    - auth
+systemManage:
+  getUserList:
+    method: GET
+    function: app.service.system_manage.user.get_user_list
+    input-model: app.api.model.system_manage.user.get_user_list_model.Input
+    output-model: app.api.model.system_manage.user.get_user_list_model.Output
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: getUserList
+    tags:
+    - systemManage/User
+  addUser:
+    method: POST
+    function: app.service.system_manage.user.add_user
+    input-model: app.api.model.system_manage.user.add_user_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: addUser
+    tags:
+    - systemManage/User
+  updateUser:
+    method: POST
+    function: app.service.system_manage.user.update_user
+    input-model: app.api.model.system_manage.user.update_user_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: updateUser
+    tags:
+    - systemManage/User
+  deleteUser:
+    method: POST
+    function: app.service.system_manage.user.delete_user
+    input-model: app.api.model.system_manage.user.delete_user_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: deleteUser
+    tags:
+    - systemManage/User
+  batchDeleteUser:
+    method: POST
+    function: app.service.system_manage.user.batch_delete_user
+    input-model: app.api.model.system_manage.user.batch_delete_user_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: batchDeleteUser
+    tags:
+    - systemManage/User
+  getRoleList:
+    method: GET
+    function: app.service.system_manage.role.get_role_list
+    input-model: app.api.model.system_manage.role.get_role_list_model.Input
+    output-model: app.api.model.system_manage.role.get_role_list_model.Output
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: getRoleList
+    tags:
+    - systemManage/Role
+  getAllRoles:
+    method: GET
+    function: app.service.system_manage.role.get_all_roles
+    output-model: app.api.model.system_manage.role.get_all_roles_model.Output
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: getAllRoles
+    tags:
+    - systemManage/Role
+  addRole:
+    method: POST
+    function: app.service.system_manage.role.add_role
+    input-model: app.api.model.system_manage.role.add_role_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: addRole
+    tags:
+    - systemManage/Role
+  updateRole:
+    method: POST
+    function: app.service.system_manage.role.update_role
+    input-model: app.api.model.system_manage.role.update_role_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: updateRole
+    tags:
+    - systemManage/Role
+  deleteRole:
+    method: POST
+    function: app.service.system_manage.role.delete_role
+    input-model: app.api.model.system_manage.role.delete_role_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: deleteRole
+    tags:
+    - systemManage/Role
+  batchDeleteRole:
+    method: POST
+    function: app.service.system_manage.role.batch_delete_role
+    input-model: app.api.model.system_manage.role.batch_delete_role_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: batchDeleteRole
+    tags:
+    - systemManage/Role
+  getMenuList/v2:
+    method: GET
+    function: app.service.system_manage.menu.get_menu_list
+    input-model: app.api.model.system_manage.menu.get_menu_list_model.Input
+    output-model: app.api.model.system_manage.menu.get_menu_list_model.Output
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: getMenuListV2
+    tags:
+    - systemManage/Menu
+  getAllPages:
+    method: GET
+    function: app.service.system_manage.menu.get_all_pages
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: getAllPages
+    tags:
+    - systemManage/Menu
+  getMenuTree:
+    method: GET
+    function: app.service.system_manage.menu.get_menu_tree
+    output-model: app.api.model.system_manage.menu.get_menu_tree_model.Output
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: getMenuTree
+    tags:
+    - systemManage/Menu
+  addMenu:
+    method: POST
+    function: app.service.system_manage.menu.add_menu
+    input-model: app.api.model.system_manage.menu.add_menu_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: addMenu
+    tags:
+    - systemManage/Menu
+  updateMenu:
+    method: POST
+    function: app.service.system_manage.menu.update_menu
+    input-model: app.api.model.system_manage.menu.update_menu_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: updateMenu
+    tags:
+    - systemManage/Menu
+  deleteMenu:
+    method: POST
+    function: app.service.system_manage.menu.delete_menu
+    input-model: app.api.model.system_manage.menu.delete_menu_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: deleteMenu
+    tags:
+    - systemManage/Menu
+  getRoleMenuAuth:
+    method: GET
+    function: app.service.system_manage.role.get_role_menu_auth
+    input-model: app.api.model.system_manage.role.get_role_menu_auth_model.Input
+    output-model: app.api.model.system_manage.role.get_role_menu_auth_model.Output
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: getRoleMenuAuth
+    tags:
+    - systemManage/RoleMenuAuth
+  updateRoleMenuAuth:
+    method: POST
+    function: app.service.system_manage.role.update_role_menu_auth
+    input-model: app.api.model.system_manage.role.update_role_menu_auth_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: updateRoleMenuAuth
+    tags:
+    - systemManage/RoleMenuAuth
+  getRoleButtonAuth:
+    method: GET
+    function: app.service.system_manage.role.get_role_button_auth
+    input-model: app.api.model.system_manage.role.get_role_button_auth_model.Input
+    output-model: app.api.model.system_manage.role.get_role_button_auth_model.Output
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: getRoleButtonAuth
+    tags:
+    - systemManage/RoleButtonAuth
+  updateRoleButtonAuth:
+    method: POST
+    function: app.service.system_manage.role.update_role_button_auth
+    input-model: app.api.model.system_manage.role.update_role_button_auth_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: updateRoleButtonAuth
+    tags:
+    - systemManage/RoleButtonAuth
+scheduleManage:
+  debugSchedulerJobs:
+    method: GET
+    function: app.service.schedule_manage.scheduler_job.debug_scheduler_jobs
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: debugSchedulerJobs
+  getScriptContent:
+    method: GET
+    function: app.service.schedule_manage.script_manage.get_script_content
+    input-model: app.api.model.schedule_manage.script_manage.get_script_content_model.Input
+    output-model: app.api.model.schedule_manage.script_manage.get_script_content_model.Output
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: scriptContent
+  getSchedulerJobList:
+    method: GET
+    function: app.service.schedule_manage.scheduler_job.get_scheduler_job_list
+    input-model: app.api.model.schedule_manage.scheduler_job.get_scheduler_job_list_model.Input
+    output-model: app.api.model.schedule_manage.scheduler_job.get_scheduler_job_list_model.Output
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: schedulerJobList
+    tags:
+    - scheduleManage/schedulerJob
+  getSchedulerJobDetail:
+    method: GET
+    function: app.service.schedule_manage.scheduler_job.get_scheduler_job_detail
+    input-model: app.api.model.schedule_manage.scheduler_job.get_scheduler_job_detail_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: schedulerJobDetail
+    tags:
+    - scheduleManage/schedulerJob
+  addSchedulerJob:
+    method: POST
+    function: app.service.schedule_manage.scheduler_job.add_scheduler_job
+    input-model: app.api.model.schedule_manage.scheduler_job.add_scheduler_job_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: schedulerJobAdd
+    tags:
+    - scheduleManage/schedulerJob
+  updateSchedulerJob:
+    method: POST
+    function: app.service.schedule_manage.scheduler_job.update_scheduler_job
+    input-model: app.api.model.schedule_manage.scheduler_job.update_scheduler_job_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: schedulerJobUpdate
+    tags:
+    - scheduleManage/schedulerJob
+  deleteSchedulerJob:
+    method: POST
+    function: app.service.schedule_manage.scheduler_job.delete_scheduler_job
+    input-model: app.api.model.schedule_manage.scheduler_job.delete_scheduler_job_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: schedulerJobDelete
+    tags:
+    - scheduleManage/schedulerJob
+  startSchedulerJob:
+    method: POST
+    function: app.service.schedule_manage.scheduler_job.start_scheduler_job
+    input-model: app.api.model.schedule_manage.scheduler_job.delete_scheduler_job_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: schedulerJobStart
+    tags:
+    - scheduleManage/schedulerJob
+  stopSchedulerJob:
+    method: POST
+    function: app.service.schedule_manage.scheduler_job.stop_scheduler_job
+    input-model: app.api.model.schedule_manage.scheduler_job.delete_scheduler_job_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: schedulerJobStop
+    tags:
+    - scheduleManage/schedulerJob
+  runSchedulerJobOnce:
+    method: POST
+    function: app.service.schedule_manage.scheduler_job.run_scheduler_job_once
+    input-model: app.api.model.schedule_manage.scheduler_job.delete_scheduler_job_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: schedulerJobRunOnce
+    tags:
+    - scheduleManage/schedulerJob
+  getSchedulerJobRunLog:
+    method: GET
+    function: app.service.schedule_manage.scheduler_job.get_scheduler_job_run_log
+    input-model: app.api.model.schedule_manage.scheduler_job.get_scheduler_job_run_log_model.Input
+    output-model: app.api.model.schedule_manage.scheduler_job.get_scheduler_job_run_log_model.Output
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: schedulerJobRunLog
+    tags:
+    - scheduleManage/schedulerJob
+  downloadSchedulerJobRunLog:
+    method: GET
+    function: app.service.schedule_manage.scheduler_job.download_scheduler_job_run_log
+    input-model: app.api.model.schedule_manage.scheduler_job.delete_scheduler_job_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: schedulerJobRunLogDownload
+    tags:
+    - scheduleManage/schedulerJob
+  getSchedulerJobRunLogContent:
+    method: GET
+    function: app.service.schedule_manage.scheduler_job.get_scheduler_job_run_log_content
+    input-model: app.api.model.schedule_manage.scheduler_job.get_scheduler_job_run_log_content_model.Input
+    output-model: app.api.model.schedule_manage.scheduler_job.get_scheduler_job_run_log_content_model.Output
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: schedulerJobRunLogContent
+    tags:
+    - scheduleManage/schedulerJob
+  getScriptInfoList:
+    method: GET
+    function: app.service.schedule_manage.script_manage.get_script_info_list
+    input-model: app.api.model.schedule_manage.script_manage.get_script_info_list_model.Input
+    output-model: app.api.model.schedule_manage.script_manage.get_script_info_list_model.Output
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: scriptInfoList
+    tags:
+    - scheduleManage/scriptManage
+  getScriptInfoDetail:
+    method: GET
+    function: app.service.schedule_manage.script_manage.get_script_info_detail
+    input-model: app.api.model.schedule_manage.script_manage.get_script_info_detail_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: scriptInfoDetail
+    tags:
+    - scheduleManage/scriptManage
+  addScriptInfo:
+    method: POST
+    function: app.service.schedule_manage.script_manage.add_script_info
+    input-model: app.api.model.schedule_manage.script_manage.add_script_info_model.Input
+    upload: file
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: scriptInfoAdd
+    tags:
+    - scheduleManage/scriptManage
+  updateScriptInfo:
+    method: POST
+    function: app.service.schedule_manage.script_manage.update_script_info
+    input-model: app.api.model.schedule_manage.script_manage.update_script_info_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: scriptInfoUpdate
+    tags:
+    - scheduleManage/scriptManage
+  deleteScriptInfo:
+    method: POST
+    function: app.service.schedule_manage.script_manage.delete_script_info
+    input-model: app.api.model.schedule_manage.script_manage.delete_script_info_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: scriptInfoDelete
+    tags:
+    - scheduleManage/scriptManage
+route:
+  getUserRoutes:
+    method: GET
+    function: app.service.route.main.get_user_routes
+    output-model: app.api.model.route.get_user_routes_model.Output
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: getUserRoutes
+    tags:
+    - route
+  getConstantRoutes:
+    method: GET
+    function: app.service.route.main.get_constant_routes
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: getConstantRoutes
+    tags:
+    - route
+  isRouteExist:
+    method: GET
+    function: app.service.route.main.is_route_exist
+    input-model: app.api.model.route.is_route_exist_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: isRouteExist
+    tags:
+    - route
+upgrade:
+  upgrade-oms:
+    method: POST
+    function: app.service.upgrade.upgrade_oms.upgrade_oms
+    input-model: app.api.model.upgrade.oms.upgrade_oms_model.Input
+    output-model: app.api.model.upgrade.oms.upgrade_oms_model.Output
+common:
+  get-selection-value:
+    method: POST
+    function: app.service.common.main.get_selection_value
+    input-model: app.api.model.common.get_selection_value_model.Input
+    output-model: app.api.model.common.get_selection_value_model.Output
+  copy-file:
+    method: POST
+    function: app.service.common.main.copy_file
+    input-model: app.api.model.common.copy_file_model.Input
+    output-model: app.api.model.common.copy_file_model.Output
+contractManage:
+  uploadContract:
+    method: POST
+    function: app.service.contract_manage.main.upload_contract
+    input-model: app.api.model.contract_manage.upload_contract_model.Input
+    output-model: app.api.model.contract_manage.upload_contract_model.Output
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    upload: file
+    operation-id: contractUpload
+    tags:
+    - contractManage/Contract
+  getContractList:
+    method: GET
+    function: app.service.contract_manage.main.get_contract_list
+    input-model: app.api.model.contract_manage.get_contract_list_model.Input
+    output-model: app.api.model.contract_manage.get_contract_list_model.Output
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: contractList
+    tags:
+    - contractManage/Contract
+  addContract:
+    method: POST
+    function: app.service.contract_manage.main.add_contract
+    input-model: app.api.model.contract_manage.add_contract_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    upload: filePdf
+    operation-id: contractAdd
+    tags:
+    - contractManage/Contract
+  updateContract:
+    method: POST
+    function: app.service.contract_manage.main.update_contract
+    input-model: app.api.model.contract_manage.update_contract_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    upload:
+    - file
+    - filePdf
+    upload-required: false
+    operation-id: contractUpdate
+    tags:
+    - contractManage/Contract
+  deleteContract:
+    method: POST
+    function: app.service.contract_manage.main.delete_contract
+    input-model: app.api.model.contract_manage.contract_id_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: contractDelete
+    tags:
+    - contractManage/Contract
+  voidContract:
+    method: POST
+    function: app.service.contract_manage.main.void_contract
+    input-model: app.api.model.contract_manage.contract_id_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: contractVoid
+    tags:
+    - contractManage/Contract
+  uploadReport:
+    method: POST
+    function: app.service.contract_manage.main.upload_report
+    input-model: app.api.model.contract_manage.contract_id_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    upload: file
+    operation-id: contractReportUpload
+    tags:
+    - contractManage/Contract
+  downloadContract:
+    method: GET
+    function: app.service.contract_manage.main.download_contract
+    input-model: app.api.model.contract_manage.contract_id_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: contractDownload
+    tags:
+    - contractManage/Contract
+  downloadContractPdf:
+    method: GET
+    function: app.service.contract_manage.main.download_contract_pdf
+    input-model: app.api.model.contract_manage.contract_id_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: contractDownloadPdf
+    tags:
+    - contractManage/Contract
+  downloadReport:
+    method: GET
+    function: app.service.contract_manage.main.download_report
+    input-model: app.api.model.contract_manage.contract_id_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: contractDownloadReport
+    tags:
+    - contractManage/Contract
+  getReceiptList:
+    method: GET
+    function: app.service.contract_manage.receipt.get_receipt_list
+    input-model: app.api.model.contract_manage.get_receipt_list_model.Input
+    output-model: app.api.model.contract_manage.get_receipt_list_model.Output
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: contractReceiptList
+    tags:
+    - contractManage/Receipt
+  addReceipt:
+    method: POST
+    function: app.service.contract_manage.receipt.add_receipt
+    input-model: app.api.model.contract_manage.add_receipt_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: contractReceiptAdd
+    tags:
+    - contractManage/Receipt
+  updateReceipt:
+    method: POST
+    function: app.service.contract_manage.receipt.update_receipt
+    input-model: app.api.model.contract_manage.update_receipt_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: contractReceiptUpdate
+    tags:
+    - contractManage/Receipt
+  deleteReceipt:
+    method: POST
+    function: app.service.contract_manage.receipt.delete_receipt
+    input-model: app.api.model.contract_manage.detail_id_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: contractReceiptDelete
+    tags:
+    - contractManage/Receipt
+  getInvoiceList:
+    method: GET
+    function: app.service.contract_manage.invoice.get_invoice_list
+    input-model: app.api.model.contract_manage.get_invoice_list_model.Input
+    output-model: app.api.model.contract_manage.get_invoice_list_model.Output
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: contractInvoiceList
+    tags:
+    - contractManage/Invoice
+  addInvoice:
+    method: POST
+    function: app.service.contract_manage.invoice.add_invoice
+    input-model: app.api.model.contract_manage.add_invoice_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    upload: file
+    upload-required: false
+    operation-id: contractInvoiceAdd
+    tags:
+    - contractManage/Invoice
+  updateInvoice:
+    method: POST
+    function: app.service.contract_manage.invoice.update_invoice
+    input-model: app.api.model.contract_manage.update_invoice_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    upload: file
+    upload-required: false
+    operation-id: contractInvoiceUpdate
+    tags:
+    - contractManage/Invoice
+  deleteInvoice:
+    method: POST
+    function: app.service.contract_manage.invoice.delete_invoice
+    input-model: app.api.model.contract_manage.detail_id_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: contractInvoiceDelete
+    tags:
+    - contractManage/Invoice
+  previewInvoice:
+    method: GET
+    function: app.service.contract_manage.invoice.preview_invoice
+    input-model: app.api.model.contract_manage.detail_id_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: contractInvoicePreview
+    tags:
+    - contractManage/Invoice
+  downloadInvoice:
+    method: GET
+    function: app.service.contract_manage.invoice.download_invoice
+    input-model: app.api.model.contract_manage.detail_id_model.Input
+    response-model: app.api.model.auth.api_response_model.ApiResponse
+    operation-id: contractInvoiceDownload
+    tags:
+    - contractManage/Invoice

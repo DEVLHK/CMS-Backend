@@ -1,0 +1,10 @@
+[client]
+host=192.168.201.86
+user=read_pms
+password=read_pms88
+port=3306
+default-character-set = utf8mb4
+
+[mysql]
+database=zentao
+default-character-set = utf8mb4
